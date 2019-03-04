@@ -1,0 +1,36 @@
+continuous reachability
+{
+ state var x,y
+	
+ setting
+ {
+  fixed steps 0.04
+#  adaptive steps { min 0.001, max 0.05}
+  time 10
+  remainder estimation 1e-5
+  matlab interval x,y
+#  fixed orders 6
+  adaptive orders { min 3, max 8 }
+  cutoff 1e-6
+  precision 53
+  output vanderpol
+  print on
+ }
+	
+ ode { 100 }
+ {
+  x' =  y
+  y' =  y - x - x^2*y
+ }
+ 
+ init
+ {
+  x in [1.25, 1.55]
+  y in [2.35, 2.45]
+ }
+}
+
+unsafe
+{
+  -y <= -2.75
+}

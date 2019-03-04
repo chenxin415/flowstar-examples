@@ -1,0 +1,31 @@
+continuous reachability
+{
+ state var x,y #, t
+	
+ setting
+ {
+  fixed steps 0.05
+  time 6
+  remainder estimation 1e-2
+  matlab interval x,y
+  fixed orders 8
+  cutoff 1e-15
+  precision 100
+  output ltv_test
+  print on
+ }
+ 
+ 
+ # RHS should be of the form ( f1(t) )*x1 + ( f2(t) )*x2 + ...
+ ltv ode { v1, v2 } { 5000 }
+ {
+   x' =  (-1)*x + (-t)*y + (t) + (0.1)*v1
+   y' =  (t^2)*x + y - (t) + (0.1)*v2
+ }
+ 
+ init
+ {
+  x in [1 , 1]
+  y in [5 , 5]
+ }
+}

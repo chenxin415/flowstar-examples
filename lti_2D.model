@@ -1,0 +1,36 @@
+continuous reachability
+{
+ state var x,y
+	
+ setting
+ {
+  fixed steps 0.05
+  time 2
+  remainder estimation 1e-2
+  matlab interval x,y
+  fixed orders 4
+  cutoff 1e-10
+  precision 100
+  output lti_test
+  print on
+ }
+ 
+ 
+ # RHS should be of the form ( f1(t) )*x1 + ( f2(t) )*x2 + ...
+ lti ode
+ {
+  x' =  -x - 4*y #+ [-0.05,0.05]
+  y' =  4*x - y #+ [-0.05,0.05]
+ }
+ 
+ init
+ {
+  x in [0.9 , 1.1]
+  y in [-0.1 , 0.1]
+ }
+}
+
+unsafe
+{
+  -y <= -0.8
+}
